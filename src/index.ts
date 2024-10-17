@@ -1,9 +1,9 @@
 import './index.css';
 
-import { greetUser } from '$utils/greet';
+import { initNavbarAnimation, stepsLine } from '$utils/gsap';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
-  const name = 'John Doe';
-  greetUser(name);
+  stepsLine();
+  initNavbarAnimation();
 });
