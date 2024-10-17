@@ -6616,6 +6616,26 @@
 
   // src/utils/gsap.ts
   gsapWithCSS.registerPlugin(ScrollTrigger2);
+  var initNavbarAnimation = () => {
+    const navbar = document.querySelector(".navbar");
+    let lastScrollY = window.scrollY;
+    gsapWithCSS.set(navbar, { y: 0 });
+    const onScroll = () => {
+      const currentScrollY = window.scrollY;
+      const offset = navbar.offsetHeight + 3 * parseFloat(getComputedStyle(navbar).paddingTop);
+      if (currentScrollY > lastScrollY && currentScrollY > offset) {
+        gsapWithCSS.to(navbar, { y: -offset, duration: 0.2, ease: "power1.inOut" });
+      } else if (currentScrollY < lastScrollY) {
+        gsapWithCSS.to(navbar, { y: 0, duration: 0.2, ease: "power1.inOut" });
+      }
+      lastScrollY = currentScrollY;
+    };
+    let timeout;
+    window.addEventListener("scroll", () => {
+      clearTimeout(timeout);
+      timeout = window.setTimeout(onScroll, 100);
+    });
+  };
   var stepsLine = () => {
     const elements = [
       ".guarantees_timeline-right.is-one",
@@ -6638,24 +6658,74 @@
       });
     });
   };
-  var initNavbarAnimation = () => {
-    const navbar = document.querySelector(".navbar");
-    let lastScrollY = window.scrollY;
-    gsapWithCSS.set(navbar, { y: 0 });
-    const onScroll = () => {
-      const currentScrollY = window.scrollY;
-      const offset = navbar.offsetHeight + 3 * parseFloat(getComputedStyle(navbar).paddingTop);
-      if (currentScrollY > lastScrollY && currentScrollY > offset) {
-        gsapWithCSS.to(navbar, { y: -offset, duration: 0.2, ease: "power1.inOut" });
-      } else if (currentScrollY < lastScrollY) {
-        gsapWithCSS.to(navbar, { y: 0, duration: 0.2, ease: "power1.inOut" });
+  var animateStep = (stepId, direction) => {
+    const xValue = direction === "right" ? 100 : -100;
+    gsapWithCSS.from(stepId, {
+      x: xValue,
+      // Déplacement en fonction de la direction
+      opacity: 0,
+      // Commence invisible
+      duration: 1.5,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: stepId,
+        start: "top 80%",
+        // L'animation démarre lorsque le haut de l'élément atteint 80% du viewport
+        toggleActions: "play none none reverse"
+        // Joue l'animation à l'entrée et la renverse à la sortie
       }
-      lastScrollY = currentScrollY;
-    };
-    let timeout;
-    window.addEventListener("scroll", () => {
-      clearTimeout(timeout);
-      timeout = window.setTimeout(onScroll, 100);
+    });
+  };
+  var stepsAnimation = () => {
+    animateStep("#step1", "right");
+    animateStep("#step2", "left");
+    animateStep("#step3", "right");
+    animateStep("#step4", "left");
+  };
+  var animateSections = () => {
+    const elements = [
+      ".section_lp-maps",
+      ".section_lp-advantages",
+      ".section_hp-services",
+      ".section_lp-features"
+    ];
+    elements.forEach((selector3) => {
+      gsapWithCSS.from(selector3, {
+        y: 50,
+        // L'élément commencera 50px plus bas que sa position finale
+        opacity: 0,
+        // Commence invisible
+        duration: 1.5,
+        // Durée de l'animation
+        ease: "power3.out",
+        // Utilise une ease similaire à celle de stepsLine
+        scrollTrigger: {
+          trigger: selector3,
+          start: "top 80%",
+          // Démarre lorsque le haut de l'élément atteint 80% du viewport
+          toggleActions: "play reverse play reverse"
+          // Joue l'animation à l'entrée et l'inverse à la sortie
+        }
+      });
+    });
+  };
+  var animateTestimonialSection = () => {
+    gsapWithCSS.from(".section_lp-testimonial", {
+      x: 100,
+      // L'élément commencera 100px à droite de sa position finale
+      opacity: 0,
+      // Commence invisible
+      duration: 3,
+      // Durée de l'animation
+      ease: "power3.out",
+      // Transition fluide
+      scrollTrigger: {
+        trigger: ".section_lp-testimonial",
+        start: "top 80%",
+        // L'animation démarre lorsque le haut de l'élément atteint 80% du viewport
+        toggleActions: "play reverse play reverse"
+        // Joue l'animation à l'entrée et l'inverse à la sortie
+      }
     });
   };
 
@@ -6664,6 +6734,13 @@
   window.Webflow.push(() => {
     stepsLine();
     initNavbarAnimation();
+    stepsAnimation();
+    animateSections();
+    animateTestimonialSection();
+  });
+  var headings = document.querySelectorAll(".legal-notices_rich-text-block h2");
+  headings.forEach((heading) => {
+    heading.classList.add("heading-style-h3");
   });
 })();
 /*! Bundled license information:

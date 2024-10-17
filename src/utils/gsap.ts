@@ -1,34 +1,7 @@
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-// Enregistre ScrollTrigger avec GSAP
 gsap.registerPlugin(ScrollTrigger);
-
-// Fonction d'animation pour plusieurs éléments
-export const stepsLine = (): void => {
-  // Sélectionner tous les éléments à animer
-  const elements = [
-    '.guarantees_timeline-right.is-one',
-    '.guarantees_timeline-right.is-two',
-    '.guarantees_timeline-right.is-three',
-    '.guarantees_timeline-right.is-four',
-    '.guarantees_timeline-right.is-five',
-  ];
-
-  // Appliquer l'animation à chaque élément
-  elements.forEach((selector) => {
-    gsap.from(selector, {
-      opacity: 0,
-      duration: 1.5,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: selector,
-        start: 'top 80%',
-        toggleActions: 'play reverse play reverse', // Jouer et inverser l'animation à l'entrée et à la sortie
-      },
-    });
-  });
-};
 
 // Navbar
 export const initNavbarAnimation = (): void => {
@@ -54,11 +27,103 @@ export const initNavbarAnimation = (): void => {
 
     lastScrollY = currentScrollY; // Met à jour la position de défilement
   };
-
   // Débouncer l'événement scroll
   let timeout: number; // Changez ici
   window.addEventListener('scroll', () => {
     clearTimeout(timeout);
     timeout = window.setTimeout(onScroll, 100); // Utilisez window.setTimeout
+  });
+};
+
+// Timeline Guarantees - ABOUT PAGE
+export const stepsLine = (): void => {
+  // Sélectionner tous les éléments à animer
+  const elements = [
+    '.guarantees_timeline-right.is-one',
+    '.guarantees_timeline-right.is-two',
+    '.guarantees_timeline-right.is-three',
+    '.guarantees_timeline-right.is-four',
+    '.guarantees_timeline-right.is-five',
+  ];
+
+  // Appliquer l'animation à chaque élément
+  elements.forEach((selector) => {
+    gsap.from(selector, {
+      opacity: 0,
+      duration: 1.5,
+      ease: 'power3.out',
+      scrollTrigger: {
+        trigger: selector,
+        start: 'top 80%',
+        toggleActions: 'play reverse play reverse', // Jouer et inverser l'animation à l'entrée et à la sortie
+      },
+    });
+  });
+};
+
+// STEPS ANIMATION - HOMEPAGE
+const animateStep = (stepId: string, direction: 'right' | 'left'): void => {
+  const xValue = direction === 'right' ? 100 : -100; // 100px vers la droite ou -100px vers la gauche
+
+  gsap.from(stepId, {
+    x: xValue, // Déplacement en fonction de la direction
+    opacity: 0, // Commence invisible
+    duration: 1.5,
+    ease: 'power3.out',
+    scrollTrigger: {
+      trigger: stepId,
+      start: 'top 80%', // L'animation démarre lorsque le haut de l'élément atteint 80% du viewport
+      toggleActions: 'play none none reverse', // Joue l'animation à l'entrée et la renverse à la sortie
+    },
+  });
+};
+
+// Fonction d'animation pour plusieurs étapes avec directions différentes
+export const stepsAnimation = (): void => {
+  // Appliquer l'animation avec direction spécifique pour chaque étape
+  animateStep('#step1', 'right');
+  animateStep('#step2', 'left');
+  animateStep('#step3', 'right');
+  animateStep('#step4', 'left');
+};
+
+// SECTION APPARITION -
+export const animateSections = (): void => {
+  // Sélectionner toutes les sections à animer
+  const elements = [
+    '.section_lp-maps',
+    '.section_lp-advantages',
+    '.section_hp-services',
+    '.section_lp-features',
+  ];
+
+  // Appliquer l'animation à chaque section
+  elements.forEach((selector) => {
+    gsap.from(selector, {
+      y: 50, // L'élément commencera 50px plus bas que sa position finale
+      opacity: 0, // Commence invisible
+      duration: 1.5, // Durée de l'animation
+      ease: 'power3.out', // Utilise une ease similaire à celle de stepsLine
+      scrollTrigger: {
+        trigger: selector,
+        start: 'top 80%', // Démarre lorsque le haut de l'élément atteint 80% du viewport
+        toggleActions: 'play reverse play reverse', // Joue l'animation à l'entrée et l'inverse à la sortie
+      },
+    });
+  });
+};
+
+// Animation pour faire apparaître 'section_lp-testimonial' avec un slide right
+export const animateTestimonialSection = (): void => {
+  gsap.from('.section_lp-testimonial', {
+    x: 100, // L'élément commencera 100px à droite de sa position finale
+    opacity: 0, // Commence invisible
+    duration: 3, // Durée de l'animation
+    ease: 'power3.out', // Transition fluide
+    scrollTrigger: {
+      trigger: '.section_lp-testimonial',
+      start: 'top 80%', // L'animation démarre lorsque le haut de l'élément atteint 80% du viewport
+      toggleActions: 'play reverse play reverse', // Joue l'animation à l'entrée et l'inverse à la sortie
+    },
   });
 };
