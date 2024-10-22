@@ -1,7 +1,7 @@
 {
   "version": 3,
   "sources": ["../src/index.css"],
-  "sourcesContent": [".button.background-color-tertiary.is-cta-button {\n    animation: bounce 2s infinite;\n  }\n  \n  @keyframes bounce {\n    0%, 100% {\n      transform: translateY(0);\n    }\n    50% {\n      transform: translateY(-0.75rem);\n    }\n  }"],
+  "sourcesContent": [".button.background-color-tertiary.is-cta-button {\n    animation: bounce 2s infinite;\n  }\n  \n  @keyframes bounce {\n    0%, 100% {\n      transform: translateY(0);\n    }\n    50% {\n      transform: translateY(-0.75rem);\n    }\n  }\n"],
   "mappings": ";AAAA,CAAC,MAAM,CAAC,yBAAyB,CAAC;AAC9B,aAAW,OAAO,GAAG;AACvB;AAEA,WAHa;AAIX;AACE,eAAW,WAAW;AACxB;AACA;AACE,eAAW,WAAW;AACxB;AACF;",
   "names": []
 }

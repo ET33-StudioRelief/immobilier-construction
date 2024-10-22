@@ -92,9 +92,10 @@ export const animateSections = (): void => {
   // Sélectionner toutes les sections à animer
   const elements = [
     '.section_lp-maps',
-    '.section_lp-advantages',
     '.section_hp-services',
     '.section_lp-features',
+    '.section_lp-advantages',
+    '.section_lp-catch-phrase',
   ];
 
   // Appliquer l'animation à chaque section
@@ -125,5 +126,138 @@ export const animateTestimonialSection = (): void => {
       start: 'top 80%', // L'animation démarre lorsque le haut de l'élément atteint 80% du viewport
       toggleActions: 'play reverse play reverse', // Joue l'animation à l'entrée et l'inverse à la sortie
     },
+  });
+};
+
+// Fonction pour animer le parallax sur .hp-services_image
+export const parallaxServiceImage = (): void => {
+  // Sélectionner toutes les divs hp-services_item avec leurs images
+  const items = document.querySelectorAll('.hp-services_item');
+
+  // Appliquer l'effet parallax à chaque item
+  items.forEach((item) => {
+    const image = item.querySelector('.hp-services_image');
+
+    if (image) {
+      gsap.fromTo(
+        image,
+        { y: -100 }, // Position initiale de l'image (parallax à -50px)
+        {
+          y: 100, // La valeur finale lorsque l'élément est visible
+          ease: 'none', // Effet linéaire pour un parallax fluide
+          scrollTrigger: {
+            trigger: item, // Utiliser chaque div hp-services_item comme déclencheur
+            start: 'top bottom', // Démarre lorsque le haut de l'élément atteint le bas du viewport
+            end: 'bottom top', // Fin lorsque le bas de l'élément atteint le haut du viewport
+            scrub: true, // Liaison avec le scroll pour un effet fluide
+          },
+        }
+      );
+    }
+  });
+};
+
+// Fonction pour animer le bouton au survol
+export const animateButtonHover = (): void => {
+  // Sélectionner tous les boutons avec la classe .button.is-secondary
+  const buttons = document.querySelectorAll('.button.is-secondary');
+
+  buttons.forEach((button) => {
+    // Cast l'élément en HTMLElement
+    const btn = button as HTMLElement;
+
+    // Définir les styles de base
+    btn.style.backgroundColor = '#ffffff'; // Couleur de fond initiale
+    btn.style.color = '#1e303c'; // Couleur de texte initiale
+    btn.style.border = '2px solid #1e303c'; // Bordure du bouton
+    btn.style.position = 'relative'; // Positionnement pour l'animation
+
+    // Ajouter un événement pour le survol (mouseenter)
+    btn.addEventListener('mouseenter', () => {
+      gsap.to(btn, {
+        backgroundColor: '#1e303c', // Couleur finale du fond
+        color: '#ffffff', // Couleur finale du texte
+        duration: 0.4,
+        ease: 'power1.inOut',
+        onStart: () => {
+          btn.style.cursor = 'pointer'; // Changer le curseur lors du survol
+        },
+      });
+    });
+
+    // Ajouter un événement pour la sortie de souris (mouseleave)
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, {
+        backgroundColor: '#ffffff', // Revenir à la couleur initiale du fond
+        color: '#1e303c', // Revenir à la couleur initiale du texte
+        duration: 0.4,
+        ease: 'power1.inOut',
+      });
+    });
+  });
+};
+
+// Fonction pour animer le parallax sur .lp-galery_list
+export const parallaxGallerieImage = (): void => {
+  const items = document.querySelectorAll('.lp-galery_list');
+
+  // Appliquer l'effet parallax à chaque item
+  items.forEach((item) => {
+    // Pour la colonne gauche
+    const leftImages = item.querySelectorAll('.lp-galery_lightbox-link.is-left-col');
+    if (leftImages.length) {
+      gsap.fromTo(
+        leftImages,
+        { y: 0 },
+        {
+          y: -75,
+          ease: 'none', // Effet linéaire pour un parallax fluide
+          scrollTrigger: {
+            trigger: '.lp-galery_list', // Utiliser chaque div lp-galery_lightbox-link comme déclencheur
+            start: 'top bottom', // Démarre lorsque le haut de l'élément atteint le bas du viewport
+            end: 'bottom 200', // Fin lorsque le bas de l'élément atteint le haut du viewport
+            scrub: true, // Liaison avec le scroll pour un effet fluide
+          },
+        }
+      );
+    }
+
+    // Pour la colonne centrale
+    const centerImages = item.querySelectorAll('.lp-galery_lightbox-link.is-center-col');
+    if (centerImages.length) {
+      gsap.fromTo(
+        centerImages,
+        { y: 0 }, // Position initiale de l'image (parallax à -100px)
+        {
+          y: 125, // La valeur finale lorsque l'élément est visible
+          ease: 'none', // Effet linéaire pour un parallax fluide
+          scrollTrigger: {
+            trigger: '.lp-galery_list', // Utiliser chaque div lp-galery_lightbox-link comme déclencheur
+            start: 'top bottom', // Démarre lorsque le haut de l'élément atteint le bas du viewport
+            end: 'bottom 200', // Fin lorsque le bas de l'élément atteint le haut du viewport
+            scrub: true, // Liaison avec le scroll pour un effet fluide
+          },
+        }
+      );
+    }
+
+    // Pour la colonne droite
+    const rightImages = item.querySelectorAll('.lp-galery_lightbox-link.is-right-col');
+    if (rightImages.length) {
+      gsap.fromTo(
+        rightImages,
+        { y: 0 }, // Position initiale de l'image (parallax à -50px)
+        {
+          y: -100, // La valeur finale lorsque l'élément est visible
+          ease: 'none', // Effet linéaire pour un parallax fluide
+          scrollTrigger: {
+            trigger: '.lp-galery_list', // Utiliser chaque div lp-galery_lightbox-link comme déclencheur
+            start: 'top bottom', // Démarre lorsque le haut de l'élément atteint le bas du viewport
+            end: 'bottom 200', // Fin lorsque le bas de l'élément atteint le haut du viewport
+            scrub: true, // Liaison avec le scroll pour un effet fluide
+          },
+        }
+      );
+    }
   });
 };
