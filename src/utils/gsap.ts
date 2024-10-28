@@ -93,7 +93,8 @@ export const animateSections = (): void => {
   const elements = [
     '.section_lp-maps',
     '.section_hp-services',
-    '.section_lp-features',
+    '.section_lp-features.is-first',
+    '.section_lp-features.is-twice',
     '.section_lp-advantages',
     '.section_lp-catch-phrase',
   ];
