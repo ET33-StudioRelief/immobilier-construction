@@ -2,6 +2,7 @@ import './index.css';
 
 import {
   animateButtonHover,
+  animateButtonNavHover,
   animateSections,
   animateTestimonialSection,
   initNavbarAnimation,
@@ -21,6 +22,7 @@ window.Webflow.push(() => {
   parallaxServiceImage();
   animateButtonHover();
   parallaxGallerieImage();
+  animateButtonNavHover();
 });
 
 // Sélectionner tous les <h2> dans .legal-notices_rich-text-block et leur attribuer la classe heading-style-h3

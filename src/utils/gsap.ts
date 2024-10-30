@@ -97,6 +97,7 @@ export const animateSections = (): void => {
     '.section_lp-features.is-twice',
     '.section_lp-advantages',
     '.section_lp-catch-phrase',
+    '.section_faq',
   ];
 
   // Appliquer l'animation à chaque section
@@ -158,7 +159,7 @@ export const parallaxServiceImage = (): void => {
   });
 };
 
-// Fonction pour animer le bouton au survol
+// Fonction pour animer le bouton secondary au survol
 export const animateButtonHover = (): void => {
   // Sélectionner tous les boutons avec la classe .button.is-secondary
   const buttons = document.querySelectorAll('.button.is-secondary');
@@ -260,5 +261,45 @@ export const parallaxGallerieImage = (): void => {
         }
       );
     }
+  });
+};
+
+// Fonction pour animer le bouton au survol
+export const animateButtonNavHover = (): void => {
+  // Sélectionner tous les boutons avec la classe .button.is-secondary
+  const buttons = document.querySelectorAll('.button.is-navbar-cta');
+
+  buttons.forEach((button) => {
+    // Cast l'élément en HTMLElement
+    const btn = button as HTMLElement;
+
+    // Définir les styles de base
+    btn.style.backgroundColor = '#1e303c'; // Couleur de fond initiale
+    btn.style.color = '#ffffff'; // Couleur de texte initiale
+    btn.style.border = '1px solid #1e303c'; // Bordure du bouton
+    btn.style.borderColor = '#ffffff';
+
+    // Ajouter un événement pour le survol (mouseenter)
+    btn.addEventListener('mouseenter', () => {
+      gsap.to(btn, {
+        backgroundColor: '#ffffff', // Couleur finale du fond
+        color: '#1e303c', // Couleur finale du texte
+        duration: 0.4,
+        ease: 'power1.inOut',
+        onStart: () => {
+          btn.style.cursor = 'pointer'; // Changer le curseur lors du survol
+        },
+      });
+    });
+
+    // Ajouter un événement pour la sortie de souris (mouseleave)
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, {
+        backgroundColor: '#1e303c', // Revenir à la couleur initiale du fond
+        color: '#ffffff', // Revenir à la couleur initiale du texte
+        duration: 0.4,
+        ease: 'power1.inOut',
+      });
+    });
   });
 };
