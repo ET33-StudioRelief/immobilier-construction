@@ -4,38 +4,59 @@ import {
   animateButtonNav,
   animateButtonSecondary,
   animateButtonTertiary,
+  animateCounter,
+  animateFeaturesItems,
+  animatePercentageCounter,
   animateSectionLp,
   animateSections,
+  animateSectionsHistory,
   animateSectionsHp,
-  animateTestimonialSection,
+  animateSectionsSlideRight,
+  contactSection,
   initNavbarAnimation,
   parallaxGallerieImage,
   parallaxServiceImage,
   stepsAnimation,
   stepsLine,
+  updateFooterYear,
 } from '$utils/gsap';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
-  stepsLine();
   initNavbarAnimation();
-  animateSections();
-  animateTestimonialSection();
-  parallaxServiceImage();
   animateButtonSecondary();
   animateButtonTertiary();
   animateButtonNav();
+  contactSection();
+  updateFooterYear();
 
   // Vérifier si l'URL est celle de la page d'accueil
   if (window.location.pathname === '/' || window.location.pathname === '/') {
     stepsAnimation();
     animateSectionsHp();
+    parallaxServiceImage();
+    parallaxGallerieImage();
+    animateSectionsSlideRight();
+    animateSections();
   }
 
   // Vérifier si l'URL contient 'a-propos'
   if (window.location.href.includes('a-propos')) {
-    parallaxGallerieImage(); // Appeler la fonction uniquement si 'a-propos' est dans l'URL
-    animateSectionLp();
+    animateSectionLp(); // Appeler la fonction uniquement si 'a-propos' est dans l'URL
+    animateSectionsHistory();
+    animateSectionsSlideRight();
+    stepsLine();
+    animateCounter();
+    animatePercentageCounter();
+  }
+
+  // Vérifier si l'URL contient 'architecte', 'constructeur' ou 'maitre-oeuvre'
+  if (/architecte|constructeur|maitre-oeuvre/.test(window.location.href)) {
+    animateSectionLp(); // Appeler la fonction uniquement si un des termes est dans l'URL
+    parallaxGallerieImage();
+    animateFeaturesItems();
+    animateSectionsSlideRight();
+    animateSections();
   }
 });
 

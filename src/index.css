@@ -11,3 +11,14 @@
     transform: translateY(-0.75rem);
   }
 }
+
+/* Testimonial slider */
+.w-slider-dot {
+  background-color: #ffffff !important;
+  opacity: 0.5;
+}
+/* Style pour le point actif du slider */
+.w-slider-dot.w-active {
+  background-color: #ffffff !important;
+  opacity: 1;
+}
