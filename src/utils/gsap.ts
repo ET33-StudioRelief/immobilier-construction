@@ -48,16 +48,22 @@ export const stepsLine = (): void => {
 
   // Appliquer l'animation à chaque élément
   elements.forEach((selector) => {
-    gsap.from(selector, {
-      opacity: 0,
-      duration: 1.5,
-      ease: 'power3.out',
-      scrollTrigger: {
-        trigger: selector,
-        start: 'top 80%',
-        toggleActions: 'play reverse play reverse', // Jouer et inverser l'animation à l'entrée et à la sortie
-      },
-    });
+    const element = document.querySelector(selector); // Vérifiez si l'élément existe
+
+    if (element) {
+      // Si l'élément existe, appliquez l'animation
+      gsap.from(selector, {
+        opacity: 0,
+        duration: 1.5,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: selector,
+          start: 'top 80%',
+          toggleActions: 'play reverse play reverse', // Jouer et inverser l'animation à l'entrée et à la sortie
+        },
+      });
+    }
+    // Ligne de console supprimée pour éviter les messages d'erreur
   });
 };
 
@@ -87,17 +93,59 @@ export const stepsAnimation = (): void => {
   animateStep('#step4', 'left');
 };
 
-// SECTION APPARITION -
+// SECTION APPARITION GLOBALE-
 export const animateSections = (): void => {
   // Sélectionner toutes les sections à animer
+  const elements = ['.section_lp-catch-phrase', '.lp-maps_component .margin-bottom.margin-xxlarge'];
+
+  // Appliquer l'animation à chaque section
+  elements.forEach((selector) => {
+    gsap.from(selector, {
+      y: 50, // L'élément commencera 50px plus bas que sa position finale
+      opacity: 0, // Commence invisible
+      duration: 1.5, // Durée de l'animation
+      ease: 'power3.out', // Utilise une ease similaire à celle de stepsLine
+      scrollTrigger: {
+        trigger: selector,
+        start: 'top 80%', // Démarre lorsque le haut de l'élément atteint 80% du viewport
+        toggleActions: 'play reverse play reverse', // Joue l'animation à l'entrée et l'inverse à la sortie
+      },
+    });
+  });
+};
+
+// SECTION APPARITION HomePage -
+export const animateSectionsHp = (): void => {
+  // Sélectionner toutes les sections à animer
   const elements = [
-    '.section_lp-maps',
     '.section_hp-services',
+    '.section_hp-step_heading',
+    '.accueil_faq .margin-bottom.margin-xxlarge',
+  ];
+
+  // Appliquer l'animation à chaque section
+  elements.forEach((selector) => {
+    gsap.from(selector, {
+      y: 50, // L'élément commencera 50px plus bas que sa position finale
+      opacity: 0, // Commence invisible
+      duration: 1.5, // Durée de l'animation
+      ease: 'power3.out', // Utilise une ease similaire à celle de stepsLine
+      scrollTrigger: {
+        trigger: selector,
+        start: 'top 80%', // Démarre lorsque le haut de l'élément atteint 80% du viewport
+        toggleActions: 'play reverse play reverse', // Joue l'animation à l'entrée et l'inverse à la sortie
+      },
+    });
+  });
+};
+
+// SECTION APPARITION LandingPage -
+export const animateSectionLp = (): void => {
+  // Sélectionner toutes les sections à animer
+  const elements = [
     '.section_lp-features.is-first',
     '.section_lp-features.is-twice',
     '.section_lp-advantages',
-    '.section_lp-catch-phrase',
-    '.section_faq',
   ];
 
   // Appliquer l'animation à chaque section
@@ -177,10 +225,10 @@ export const animateButtonSecondary = (): void => {
     // Ajouter un événement pour le survol (mouseenter)
     btn.addEventListener('mouseenter', () => {
       gsap.to(btn, {
-        backgroundColor: '#1e303c', // Couleur finale du fond
+        backgroundImage: 'linear-gradient(90deg, #1e303c 0%, #346c75 85%)', // Changer en dégradé
         color: '#ffffff', // Couleur finale du texte
-        duration: 0.4,
-        ease: 'power1.inOut',
+        duration: 0.4, // Durée de l'animation d'entrée
+        ease: 'power1.inOut', // Type d'animation d'entrée
         onStart: () => {
           btn.style.cursor = 'pointer'; // Changer le curseur lors du survol
         },
@@ -189,12 +237,21 @@ export const animateButtonSecondary = (): void => {
 
     // Ajouter un événement pour la sortie de souris (mouseleave)
     btn.addEventListener('mouseleave', () => {
-      gsap.to(btn, {
-        backgroundColor: '#ffffff', // Revenir à la couleur initiale du fond
-        color: '#1e303c', // Revenir à la couleur initiale du texte
-        duration: 0.4,
-        ease: 'power1.inOut',
-      });
+      // Réinitialiser le dégradé et les couleurs avec une animation fluide
+      gsap.fromTo(
+        btn,
+        {
+          backgroundImage: 'linear-gradient(90deg, #1e303c 0%, #346c75 85%)', // Valeur initiale pour l'animation
+          color: '#ffffff', // Valeur initiale pour le texte
+        },
+        {
+          backgroundImage: 'linear-gradient(90deg, #ffffff 0%, #fffefe 85%)', // Nouveau dégradé de blanc
+          backgroundColor: '#ffffff', // Revenir à la couleur initiale du fond
+          color: '#1e303c', // Revenir à la couleur initiale du texte
+          duration: 0.6, // Durée de l'animation de sortie pour plus de douceur
+          ease: 'power1.out', // Type d'animation de sortie
+        }
+      );
     });
   });
 };
@@ -267,21 +324,22 @@ export const parallaxGallerieImage = (): void => {
 // Fonction pour animer les boutons au survol
 export const animateButtonTertiary = (): void => {
   // Sélectionner tous les boutons avec les classes .button.is-navbar-cta et .button.is-tertiary
-  const buttons = document.querySelectorAll('.button.is-navbar-cta, .button.is-tertiary');
+  const buttons = document.querySelectorAll('.button.is-tertiary');
 
   buttons.forEach((button) => {
     const btn = button as HTMLElement;
 
     // Définir les styles de base
-    btn.style.backgroundColor = '#1e303c';
+    btn.style.backgroundImage = 'linear-gradient(90deg, #1e303c 0%, #346c75 85%)';
     btn.style.color = '#ffffff';
-    btn.style.border = '1px solid #1e303c';
+    btn.style.border = '2px solid transparent'; // Bordure du bouton
 
     // Ajouter un événement pour le survol (mouseenter)
     btn.addEventListener('mouseenter', () => {
       gsap.to(btn, {
-        backgroundColor: '#ffffff', // Couleur finale du fond
+        backgroundImage: 'linear-gradient(90deg, #ffffff 0%, #fffefe 85%)', // Couleur finale du fond
         color: '#1e303c', // Couleur finale du texte
+        borderColor: '#1e303c', // Couleur de bordure
         duration: 0.4,
         ease: 'power1.inOut',
         onStart: () => {
@@ -293,8 +351,47 @@ export const animateButtonTertiary = (): void => {
     // Ajouter un événement pour la sortie de souris (mouseleave)
     btn.addEventListener('mouseleave', () => {
       gsap.to(btn, {
-        backgroundColor: '#1e303c', // Revenir à la couleur initiale du fond
+        backgroundImage: 'linear-gradient(90deg, #1e303c 0%, #346c75 85%)', // Revenir à la couleur initiale du fond
         color: '#ffffff', // Revenir à la couleur initiale du texte
+        duration: 0.4,
+        ease: 'power1.inOut',
+      });
+    });
+  });
+};
+
+// Fonction pour animer le button CTA NAVBAR
+export const animateButtonNav = (): void => {
+  // Sélectionner tous les boutons avec les classes .button.is-navbar-cta et .button.is-tertiary
+  const buttons = document.querySelectorAll('.button.is-primary.is-nav');
+
+  buttons.forEach((button) => {
+    const btn = button as HTMLElement;
+
+    // Définir les styles de base
+    btn.style.backgroundColor = '#ffffff';
+    btn.style.color = '#1e303c';
+    btn.style.border = '2px solid transparent'; // Bordure du bouton
+
+    // Ajouter un événement pour le survol (mouseenter)
+    btn.addEventListener('mouseenter', () => {
+      gsap.to(btn, {
+        backgroundColor: 'transparent', // Couleur finale du fond
+        color: '#ffffff', // Couleur finale du texte
+        borderColor: '#ffffff', // Couleur de bordure
+        duration: 0.4,
+        ease: 'power1.inOut',
+        onStart: () => {
+          btn.style.cursor = 'pointer'; // Changer le curseur lors du survol
+        },
+      });
+    });
+
+    // Ajouter un événement pour la sortie de souris (mouseleave)
+    btn.addEventListener('mouseleave', () => {
+      gsap.to(btn, {
+        backgroundColor: '#ffffff', // Couleur finale du fond
+        color: '#1e303c', // Revenir à la couleur initiale du texte
         duration: 0.4,
         ease: 'power1.inOut',
       });
