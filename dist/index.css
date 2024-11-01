@@ -1,1 +1,21 @@
-.button.background-color-tertiary.is-cta-button{animation:bounce 2s infinite}@keyframes bounce{0%,to{transform:translateY(0)}50%{transform:translateY(-.75rem)}}.w-slider-dot{background-color:#fff!important;opacity:.5}.w-slider-dot.w-active{background-color:#fff!important;opacity:1}
+/* src/index.css */
+.button.background-color-tertiary.is-cta-button {
+  animation: bounce 2s infinite;
+}
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-0.75rem);
+  }
+}
+.w-slider-dot {
+  background-color: #ffffff !important;
+  opacity: 0.5;
+}
+.w-slider-dot.w-active {
+  background-color: #ffffff !important;
+  opacity: 1;
+}
+/*# sourceMappingURL=index.css.map */

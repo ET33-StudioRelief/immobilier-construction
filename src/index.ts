@@ -71,7 +71,8 @@ headings.forEach((heading) => {
 // Garantie Heading Sticky
 const leftContent = document.querySelector<HTMLElement>('.guaranteest_content-left');
 
-if (leftContent) {
+// Vérifier si leftContent existe et si la largeur de l'écran est supérieure à 767px
+if (leftContent && window.innerWidth > 767) {
   leftContent.style.position = 'sticky';
   leftContent.style.top = '50px'; // devient sticky 50px avant le haut
 }

@@ -166,6 +166,37 @@ export const animateButtonSecondary = (): void => {
   });
 };
 
+// SECTION APPARITION GLOBALE-
+export const contactSection = (): void => {
+  // Sélectionner toutes les sections à animer
+  const elements = ['.section_contact'];
+
+  // Appliquer l'animation à chaque section
+  elements.forEach((selector) => {
+    gsap.from(selector, {
+      y: 50, // L'élément commencera 50px plus bas que sa position finale
+      opacity: 0, // Commence invisible
+      duration: 1.5, // Durée de l'animation
+      ease: 'power3.out', // Utilise une ease similaire à celle de stepsLine
+      scrollTrigger: {
+        trigger: selector,
+        start: 'top 80%', // Démarre lorsque le haut de l'élément atteint 80% du viewport
+        toggleActions: 'play reverse play reverse', // Joue l'animation à l'entrée et l'inverse à la sortie
+      },
+    });
+  });
+};
+
+// Fonction pour mettre à jour l'année dans le footer
+export function updateFooterYear(): void {
+  const currentYear: number = new Date().getFullYear(); // Obtenez l'année actuelle
+  const footerYearElement: HTMLElement | null = document.querySelector('.footer_year');
+
+  if (footerYearElement) {
+    footerYearElement.textContent = currentYear.toString(); // Mettez à jour le contenu
+  }
+}
+
 /* SECTIONS */
 // Animation pour faire apparaître plusieurs sections avec un slide depuis la droite
 export const animateSectionsSlideRight = (): void => {
@@ -174,6 +205,9 @@ export const animateSectionsSlideRight = (): void => {
 
   // Appliquer l'animation à chaque section
   sections.forEach((selector) => {
+    // Vérifier si on est sur un écran supérieur à 767px pour '.section_lp-testimonial'
+    if (selector === '.section_lp-testimonial' && window.innerWidth <= 767) return;
+
     gsap.from(selector, {
       x: 100, // Commence 100px à droite de la position finale
       opacity: 0, // Commence invisible
@@ -188,18 +222,22 @@ export const animateSectionsSlideRight = (): void => {
   });
 };
 
-// SECTION APPARITION GLOBALE-
+// SECTION APPARITION GLOBALE
 export const animateSections = (): void => {
   // Sélectionner toutes les sections à animer
   const elements = [
     '.section_lp-catch-phrase',
     '.lp-maps_component .margin-bottom.margin-xxlarge',
     '.lp-features .margin-bottom.margin-large',
-    '.section_hp-services. margin-bottom.margin-xxlarge',
+    '.section_hp-services .margin-bottom.margin-xxlarge',
   ];
 
   // Appliquer l'animation à chaque section
   elements.forEach((selector) => {
+    // Condition pour '.section_lp-catch-phrase' sur les petits écrans
+    const isCatchPhrase = selector === '.section_lp-catch-phrase';
+    const isSmallScreen = window.innerWidth < 767;
+
     gsap.from(selector, {
       y: 50, // L'élément commencera 50px plus bas que sa position finale
       opacity: 0, // Commence invisible
@@ -207,8 +245,9 @@ export const animateSections = (): void => {
       ease: 'power3.out', // Utilise une ease similaire à celle de stepsLine
       scrollTrigger: {
         trigger: selector,
-        start: 'top 80%', // Démarre lorsque le haut de l'élément atteint 80% du viewport
-        toggleActions: 'play reverse play reverse', // Joue l'animation à l'entrée et l'inverse à la sortie
+        start: 'top 80%',
+        toggleActions:
+          isCatchPhrase && isSmallScreen ? 'play none none none' : 'play reverse play reverse', // Joue l'animation une seule fois pour .section_lp-catch-phrase sur les petits écrans
       },
     });
   });
@@ -328,6 +367,9 @@ export const animateSectionLp = (): void => {
 // Fonction pour animer le parallax sur .lp-galery_list
 export const parallaxGallerieImage = (): void => {
   const items = document.querySelectorAll('.lp-galery_list');
+
+  // Activer la fonction seulement si la largeur de l'écran est supérieure à 767px
+  if (window.innerWidth <= 767) return;
 
   // Appliquer l'effet parallax à chaque item
   items.forEach((item) => {
@@ -517,35 +559,4 @@ export function animatePercentageCounter(): void {
       });
     },
   });
-}
-
-// SECTION APPARITION GLOBALE-
-export const contactSection = (): void => {
-  // Sélectionner toutes les sections à animer
-  const elements = ['.section_contact'];
-
-  // Appliquer l'animation à chaque section
-  elements.forEach((selector) => {
-    gsap.from(selector, {
-      y: 50, // L'élément commencera 50px plus bas que sa position finale
-      opacity: 0, // Commence invisible
-      duration: 1.5, // Durée de l'animation
-      ease: 'power3.out', // Utilise une ease similaire à celle de stepsLine
-      scrollTrigger: {
-        trigger: selector,
-        start: 'top 80%', // Démarre lorsque le haut de l'élément atteint 80% du viewport
-        toggleActions: 'play reverse play reverse', // Joue l'animation à l'entrée et l'inverse à la sortie
-      },
-    });
-  });
-};
-
-// Fonction pour mettre à jour l'année dans le footer
-export function updateFooterYear(): void {
-  const currentYear: number = new Date().getFullYear(); // Obtenez l'année actuelle
-  const footerYearElement: HTMLElement | null = document.querySelector('.footer_year');
-
-  if (footerYearElement) {
-    footerYearElement.textContent = currentYear.toString(); // Mettez à jour le contenu
-  }
 }
