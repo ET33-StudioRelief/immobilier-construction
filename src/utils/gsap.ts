@@ -216,28 +216,24 @@ export const animateSectionsSlideRight = (): void => {
       scrollTrigger: {
         trigger: selector,
         start: 'top 80%', // L'animation démarre lorsque le haut de l'élément atteint 80% du viewport
-        toggleActions: 'play reverse play reverse', // Joue l'animation à l'entrée et l'inverse à la sortie
+        toggleActions: 'play none none none', // Joue l'animation à l'entrée et l'inverse à la sortie
       },
     });
   });
 };
 
-// SECTION APPARITION GLOBALE
+// SECTION APPARITION GLOBALE-
 export const animateSections = (): void => {
   // Sélectionner toutes les sections à animer
   const elements = [
     '.section_lp-catch-phrase',
     '.lp-maps_component .margin-bottom.margin-xxlarge',
     '.lp-features .margin-bottom.margin-large',
-    '.section_hp-services .margin-bottom.margin-xxlarge',
+    '.section_hp-services. margin-bottom.margin-xxlarge',
   ];
 
   // Appliquer l'animation à chaque section
   elements.forEach((selector) => {
-    // Condition pour '.section_lp-catch-phrase' sur les petits écrans
-    const isCatchPhrase = selector === '.section_lp-catch-phrase';
-    const isSmallScreen = window.innerWidth < 767;
-
     gsap.from(selector, {
       y: 50, // L'élément commencera 50px plus bas que sa position finale
       opacity: 0, // Commence invisible
@@ -245,9 +241,8 @@ export const animateSections = (): void => {
       ease: 'power3.out', // Utilise une ease similaire à celle de stepsLine
       scrollTrigger: {
         trigger: selector,
-        start: 'top 80%',
-        toggleActions:
-          isCatchPhrase && isSmallScreen ? 'play none none none' : 'play reverse play reverse', // Joue l'animation une seule fois pour .section_lp-catch-phrase sur les petits écrans
+        start: 'top 80%', // Démarre lorsque le haut de l'élément atteint 80% du viewport
+        toggleActions: 'play reverse play reverse', // Joue l'animation à l'entrée et l'inverse à la sortie
       },
     });
   });

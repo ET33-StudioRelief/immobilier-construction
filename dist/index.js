@@ -6799,7 +6799,7 @@
           trigger: selector3,
           start: "top 80%",
           // L'animation démarre lorsque le haut de l'élément atteint 80% du viewport
-          toggleActions: "play reverse play reverse"
+          toggleActions: "play none none none"
           // Joue l'animation à l'entrée et l'inverse à la sortie
         }
       });
@@ -6810,11 +6810,9 @@
       ".section_lp-catch-phrase",
       ".lp-maps_component .margin-bottom.margin-xxlarge",
       ".lp-features .margin-bottom.margin-large",
-      ".section_hp-services .margin-bottom.margin-xxlarge"
+      ".section_hp-services. margin-bottom.margin-xxlarge"
     ];
     elements.forEach((selector3) => {
-      const isCatchPhrase = selector3 === ".section_lp-catch-phrase";
-      const isSmallScreen = window.innerWidth < 767;
       gsapWithCSS.from(selector3, {
         y: 50,
         // L'élément commencera 50px plus bas que sa position finale
@@ -6827,8 +6825,9 @@
         scrollTrigger: {
           trigger: selector3,
           start: "top 80%",
-          toggleActions: isCatchPhrase && isSmallScreen ? "play none none none" : "play reverse play reverse"
-          // Joue l'animation une seule fois pour .section_lp-catch-phrase sur les petits écrans
+          // Démarre lorsque le haut de l'élément atteint 80% du viewport
+          toggleActions: "play reverse play reverse"
+          // Joue l'animation à l'entrée et l'inverse à la sortie
         }
       });
     });
