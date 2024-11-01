@@ -6912,6 +6912,29 @@
       }
     });
   };
+  var animateFeaturesHp = () => {
+    const selector3 = ".section_lp-features";
+    const element = document.querySelector(selector3);
+    if (!element)
+      return;
+    gsapWithCSS.from(element, {
+      y: 50,
+      // L'élément commencera 50px plus bas que sa position finale
+      opacity: 0,
+      // Commence invisible
+      duration: 1.5,
+      // Durée de l'animation
+      ease: "power3.out",
+      // Utilise une ease similaire à celle de stepsLine
+      scrollTrigger: {
+        trigger: element,
+        start: "top 80%",
+        // Démarre lorsque le haut de l'élément atteint 80% du viewport
+        toggleActions: "play reverse play reverse"
+        // Joue l'animation une seule fois
+      }
+    });
+  };
   var animateSectionLp = () => {
     const elements = [
       ".section_lp-features.is-first",
@@ -7142,6 +7165,7 @@
     contactSection();
     updateFooterYear();
     if (window.location.pathname === "/" || window.location.pathname === "/") {
+      animateFeaturesHp();
       stepsAnimation();
       animateSectionsHp();
       parallaxServiceImage();

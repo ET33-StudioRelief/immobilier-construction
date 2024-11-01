@@ -332,6 +332,27 @@ export const parallaxServiceImage = (): void => {
   });
 };
 
+// ANIMATION POUR SECTION HP FEATURES
+export const animateFeaturesHp = (): void => {
+  const selector = '.section_lp-features';
+
+  // Vérifier si l'élément existe avant d'appliquer l'animation
+  const element = document.querySelector(selector);
+  if (!element) return; // Sort de la fonction si l'élément n'existe pas
+
+  gsap.from(element, {
+    y: 50, // L'élément commencera 50px plus bas que sa position finale
+    opacity: 0, // Commence invisible
+    duration: 1.5, // Durée de l'animation
+    ease: 'power3.out', // Utilise une ease similaire à celle de stepsLine
+    scrollTrigger: {
+      trigger: element,
+      start: 'top 80%', // Démarre lorsque le haut de l'élément atteint 80% du viewport
+      toggleActions: 'play reverse play reverse', // Joue l'animation une seule fois
+    },
+  });
+};
+
 /* LandingPage */
 // SECTION APPARITION//
 export const animateSectionLp = (): void => {

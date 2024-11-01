@@ -5,6 +5,7 @@ import {
   animateButtonSecondary,
   animateButtonTertiary,
   animateCounter,
+  animateFeaturesHp,
   animateFeaturesItems,
   animatePercentageCounter,
   animateSectionLp,
@@ -32,6 +33,7 @@ window.Webflow.push(() => {
 
   // Vérifier si l'URL est celle de la page d'accueil
   if (window.location.pathname === '/' || window.location.pathname === '/') {
+    animateFeaturesHp();
     stepsAnimation();
     animateSectionsHp();
     parallaxServiceImage();
