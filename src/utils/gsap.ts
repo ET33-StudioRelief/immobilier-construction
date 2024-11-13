@@ -198,23 +198,29 @@ export function updateFooterYear(): void {
 }
 
 /* SECTIONS */
-// Animation pour faire apparaître plusieurs sections avec un slide depuis la droite
-export const animateSectionsSlideRight = (): void => {
-  // Liste des sélecteurs pour chaque section à animer
-  const sections = ['.section_lp-testimonial', '.section_slider-galerie'];
+// Animation pour faire apparaître une section avec un slide depuis la droite
+export const animateSectionsSlideRight = (selector?: string): void => {
+  // Tableau par défaut des sélecteurs si aucun n'est fourni
+  const defaultSelectors = ['.section_lp-testimonial', '.section_slider-galerie'];
 
-  // Appliquer l'animation à chaque section
-  sections.forEach((selector) => {
+  // Si un sélecteur spécifique est fourni, l'utiliser, sinon utiliser le tableau par défaut
+  const selectorsToAnimate = selector ? [selector] : defaultSelectors;
+
+  selectorsToAnimate.forEach((currentSelector) => {
+    // Vérifier si l'élément existe
+    const element = document.querySelector(currentSelector);
+    if (!element) return; // Passe au suivant si l'élément n'existe pas
+
     // Vérifier si on est sur un écran supérieur à 767px pour '.section_lp-testimonial'
-    if (selector === '.section_lp-testimonial' && window.innerWidth <= 767) return;
+    if (currentSelector === '.section_lp-testimonial' && window.innerWidth <= 767) return;
 
-    gsap.from(selector, {
+    gsap.from(currentSelector, {
       x: 100, // Commence 100px à droite de la position finale
       opacity: 0, // Commence invisible
       duration: 3, // Durée de l'animation
       ease: 'power3.out', // Transition fluide
       scrollTrigger: {
-        trigger: selector,
+        trigger: currentSelector,
         start: 'top 80%', // L'animation démarre lorsque le haut de l'élément atteint 80% du viewport
         toggleActions: 'play none none none', // Joue l'animation à l'entrée et l'inverse à la sortie
       },
@@ -228,21 +234,25 @@ export const animateSections = (): void => {
   const elements = [
     '.section_lp-catch-phrase',
     '.lp-maps_component .margin-bottom.margin-xxlarge',
-    '.lp-features .margin-bottom.margin-large',
-    '.section_hp-services. margin-bottom.margin-xxlarge',
+    '.lp-features.margin-bottom.margin-large',
+    '.section_hp-services.margin-bottom.margin-xxlarge',
   ];
 
   // Appliquer l'animation à chaque section
   elements.forEach((selector) => {
+    // Vérifier si l'élément existe avant d'appliquer l'animation
+    const element = document.querySelector(selector);
+    if (!element) return; // Passe au suivant si l'élément n'existe pas
+
     gsap.from(selector, {
-      y: 50, // L'élément commencera 50px plus bas que sa position finale
-      opacity: 0, // Commence invisible
-      duration: 1.5, // Durée de l'animation
-      ease: 'power3.out', // Utilise une ease similaire à celle de stepsLine
+      y: 50,
+      opacity: 0,
+      duration: 1.5,
+      ease: 'power3.out',
       scrollTrigger: {
         trigger: selector,
-        start: 'top 80%', // Démarre lorsque le haut de l'élément atteint 80% du viewport
-        toggleActions: 'play reverse play reverse', // Joue l'animation à l'entrée et l'inverse à la sortie
+        start: 'top 80%',
+        toggleActions: 'play reverse play reverse',
       },
     });
   });
@@ -356,25 +366,40 @@ export const animateFeaturesHp = (): void => {
 /* LandingPage */
 // SECTION APPARITION//
 export const animateSectionLp = (): void => {
-  // Sélectionner toutes les sections à animer
-  const elements = [
+  // Définir les sélecteurs de base
+  const baseSelectors = [
     '.section_lp-features.is-first',
     '.section_lp-features.is-twice',
     '.section_lp-advantages',
-    '.section_stats',
   ];
+
+  // Déterminer les sélecteurs à utiliser selon l'URL
+  let elements;
+  if (window.location.href.includes('a-propos')) {
+    // Sur la page a-propos, uniquement animer .section_stats
+    elements = ['.section_stats'];
+  } else if (/architecte|constructeur|maitre-oeuvre/.test(window.location.href)) {
+    // Sur les pages landing, animer tous les sélecteurs sauf .section_stats
+    elements = baseSelectors;
+  } else {
+    // Sur les autres pages, animer tous les sélecteurs
+    elements = [...baseSelectors, '.section_stats'];
+  }
 
   // Appliquer l'animation à chaque section
   elements.forEach((selector) => {
+    const element = document.querySelector(selector);
+    if (!element) return; // Ignorer si l'élément n'existe pas
+
     gsap.from(selector, {
-      y: 50, // L'élément commencera 50px plus bas que sa position finale
-      opacity: 0, // Commence invisible
-      duration: 1.5, // Durée de l'animation
-      ease: 'power3.out', // Utilise une ease similaire à celle de stepsLine
+      y: 50,
+      opacity: 0,
+      duration: 1.5,
+      ease: 'power3.out',
       scrollTrigger: {
         trigger: selector,
-        start: 'top 80%', // Démarre lorsque le haut de l'élément atteint 80% du viewport
-        toggleActions: 'play reverse play reverse', // Joue l'animation à l'entrée et l'inverse à la sortie
+        start: 'top 80%',
+        toggleActions: 'play reverse play reverse',
       },
     });
   });
