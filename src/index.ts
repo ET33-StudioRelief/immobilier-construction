@@ -28,7 +28,6 @@ window.Webflow.push(() => {
   animateButtonSecondary();
   animateButtonTertiary();
   animateButtonNav();
-  contactSection();
   updateFooterYear();
 
   // Vérifier si l'URL est celle de la page d'accueil
@@ -38,7 +37,7 @@ window.Webflow.push(() => {
     animateSectionsHp();
     parallaxServiceImage();
     parallaxGallerieImage();
-    animateSectionsSlideRight();
+    animateSectionsSlideRight('.section_lp-testimonial');
     animateSections();
   }
 
@@ -46,10 +45,15 @@ window.Webflow.push(() => {
   if (window.location.href.includes('a-propos')) {
     animateSectionLp(); // Appeler la fonction uniquement si 'a-propos' est dans l'URL
     animateSectionsHistory();
-    animateSectionsSlideRight();
+    animateSectionsSlideRight('.section_slider-galerie');
     stepsLine();
     animateCounter();
     animatePercentageCounter();
+  }
+
+  // Vérifier si l'URL contient 'a-propos'
+  if (window.location.href.includes('contact')) {
+    contactSection();
   }
 
   // Vérifier si l'URL contient 'architecte', 'constructeur' ou 'maitre-oeuvre'
@@ -57,8 +61,9 @@ window.Webflow.push(() => {
     animateSectionLp(); // Appeler la fonction uniquement si un des termes est dans l'URL
     parallaxGallerieImage();
     animateFeaturesItems();
-    animateSectionsSlideRight();
+    animateSectionsSlideRight('.section_lp-testimonial');
     animateSections();
+    contactSection();
   }
 });
 
