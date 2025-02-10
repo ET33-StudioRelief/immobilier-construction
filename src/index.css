@@ -22,3 +22,8 @@
   background-color: #ffffff !important;
   opacity: 1;
 }
+
+/* Cacher complètement la bannière Quantcast - cookie automatiquement généré */
+.qc-cmp2-container {
+  display: none !important;
+}
