@@ -22,9 +22,12 @@ import {
   updateFooterYear,
 } from '$utils/gsap';
 
+import { initContactEmailFlow } from './utils/contact';
+
 window.Webflow ||= [];
 window.Webflow.push(() => {
   initNavbarAnimation();
+  initContactEmailFlow();
   animateButtonSecondary();
   animateButtonTertiary();
   animateButtonNav();
