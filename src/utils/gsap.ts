@@ -6,7 +6,16 @@ gsap.registerPlugin(ScrollTrigger);
 /* GLOBAL */
 // Navbar
 export const initNavbarAnimation = (): void => {
-  const navbar = document.querySelector('.navbar') as HTMLElement;
+  // Sur mobile/tablette (< 992px), si le menu est ouvert, on le ferme avant d'initialiser l'animation navbar.
+  // Important: on passe par un "click" pour laisser Webflow gérer correctement l'état (overlay, aria, classes...).
+  if (window.innerWidth < 992) {
+    const menuButton = document.querySelector<HTMLElement>('.navbar_menu-button');
+    if (menuButton?.classList.contains('w--open')) {
+      menuButton.click();
+    }
+  }
+
+  const navbar = document.querySelector('.navbar_wrapper') as HTMLElement;
   let lastScrollY = window.scrollY; // Stocke la position de défilement précédente
 
   // Cache la navbar initialement
