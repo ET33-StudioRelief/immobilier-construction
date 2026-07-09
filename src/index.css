@@ -1,27 +1,7 @@
-.button.background-color-tertiary.is-cta-button {
-  animation: bounce 2s infinite;
-}
-
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-0.75rem);
-  }
-}
-
-/* Testimonial slider */
-.w-slider-dot {
-  background-color: #ffffff !important;
-  opacity: 0.5;
-}
-/* Style pour le point actif du slider */
-.w-slider-dot.w-active {
-  background-color: #ffffff !important;
-  opacity: 1;
-}
+@import './css/navbar.css';
+@import './css/slider.css';
+@import './css/rich-text.css';
+@import './css/animation.css';
 
 /* Cacher complètement la bannière Quantcast - cookie automatiquement généré */
 .qc-cmp2-container {
