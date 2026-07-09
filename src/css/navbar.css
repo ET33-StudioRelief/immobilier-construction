@@ -1,0 +1,56 @@
+/* ─── Scroll hide (initNavbar) ─── */
+/* GPU hint for GSAP yPercent — desktop only to avoid permanent mobile cost. */
+@media (min-width: 768px) {
+  [data-element='navbar'] {
+    will-change: transform;
+  }
+}
+
+/* ─── Navbar scroll surface (initNavbar toggles .scrolled) ─── */
+[data-element='navbar'] {
+  transition:
+    background-color 0.25s ease-out,
+    backdrop-filter 0.25s ease-out,
+    -webkit-backdrop-filter 0.25s ease-out;
+}
+
+[data-element='navbar'].scrolled {
+  background-color: rgba(30, 48, 60, 0.75) !important;
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+}
+
+/* Menu open — w--open is on .w-nav-button, not on the root .w-nav */
+[data-element='navbar']:has(.w-nav-button.w--open),
+[data-element='navbar']:has(.w-nav-menu[data-nav-menu-open]) {
+  background-color: var(--base-color-brand--blue-dark-a75) !important;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+/* Force-close hover dropdowns while the navbar is sliding up */
+[data-element='navbar'].is-navbar-hiding .w-dropdown-list {
+  height: 0 !important;
+  overflow: hidden;
+}
+
+[data-element='navbar'].is-navbar-hiding .w-dropdown {
+  pointer-events: none;
+}
+
+.w-nav-overlay {
+  background-color: var(--base-color-brand--blue-dark-a75);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition:
+    opacity 0.35s ease,
+    visibility 0.35s ease;
+}
+
+[data-element='navbar']:has(.w-nav-button.w--open) .w-nav-overlay,
+[data-element='navbar']:has(.w-nav-menu[data-nav-menu-open]) .w-nav-overlay {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
