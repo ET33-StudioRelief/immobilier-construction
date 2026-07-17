@@ -18,11 +18,13 @@ window.Webflow.push(() => {
   initContactEmailFlow();
   initFadeByStep();
   initBgParallax();
-  parallaxGallerieImage();
   animateSectionsHistory();
   stepsLine();
   animateCounter();
   animatePercentageCounter();
+  if (window.location.pathname === '/') {
+    parallaxGallerieImage();
+  }
 });
 
 // Garantie Heading Sticky
