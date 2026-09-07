@@ -109,28 +109,42 @@ export function initNavbar(): void {
   let isHidden = false;
   let lastScrollY = window.scrollY;
 
-  gsap.set(navbar, { yPercent: 0 });
-
-  const yTo = gsap.quickTo(navbar, 'yPercent', {
-    duration: 0.3,
-    ease: 'power2',
-    overwrite: 'auto',
-  });
-
   const updateScrolled = (scrollY: number): void => {
     navbar.classList.toggle('scrolled', scrollY > SCROLLED_THRESHOLD);
+  };
+
+  /**
+   * Removes the inline `transform` once the navbar is settled in its visible
+   * position. On iOS Safari a `position: fixed` element that keeps a transform
+   * stays promoted to a composited layer whose hit-test region can swallow taps
+   * on the content below it (the cross-origin YouTube iframes), which is why the
+   * videos became untappable only after a scroll-up brought the navbar back.
+   */
+  const clearTransform = (): void => {
+    if (!isHidden) gsap.set(navbar, { clearProps: 'transform' });
   };
 
   const show = (): void => {
     if (!isHidden) return;
     isHidden = false;
-    yTo(0);
+    gsap.to(navbar, {
+      yPercent: 0,
+      duration: 0.3,
+      ease: 'power2',
+      overwrite: 'auto',
+      onComplete: clearTransform,
+    });
   };
 
   const hide = (): void => {
     if (isHidden) return;
     isHidden = true;
-    yTo(-100);
+    gsap.to(navbar, {
+      yPercent: -100,
+      duration: 0.3,
+      ease: 'power2',
+      overwrite: 'auto',
+    });
   };
 
   updateScrolled(window.scrollY);
