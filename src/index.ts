@@ -11,9 +11,11 @@ import {
 import { initNavbar } from './typescript/components/navbar';
 import { initContactEmailFlow } from './typescript/contact';
 import { initBgParallax, initFadeByStep } from './typescript/global-animations';
+import { initIosIframeTapFix } from './typescript/utils/ios-iframe-tap-fix';
 
 window.Webflow ||= [];
 window.Webflow.push(() => {
+  initIosIframeTapFix();
   initNavbar();
   initContactEmailFlow();
   initFadeByStep();
